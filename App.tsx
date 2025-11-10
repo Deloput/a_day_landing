@@ -295,8 +295,6 @@ function App() {
       {/* === CTA BUTTON: PLAN A DAY === */}
       <a
         href="https://aday.today/main?action=plan"
-        target="_blank"
-        rel="noopener noreferrer"
         className="fixed z-[600] md:top-8 md:right-8 bottom-6 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto
                    bg-neutral-900 text-white font-brand text-xl tracking-tighter px-8 py-4 rounded-full
                    shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-200

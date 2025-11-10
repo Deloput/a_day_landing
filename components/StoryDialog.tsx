@@ -106,10 +106,8 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
             <h3 className="text-3xl font-bold text-neutral-900 mb-2">{event.locationName}</h3>
             <p className="text-neutral-500 mb-12">{event.distance} away</p>
 
-            <a 
+            <a
               href={deepLink}
-              target="_blank"
-              rel="noopener noreferrer"
               className="w-full py-4 bg-neutral-900 text-white font-bold rounded-full shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
