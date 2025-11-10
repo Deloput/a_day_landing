@@ -93,7 +93,7 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
           highlights: event.highlights,
           imageUrl: event.imageUrl
         }));
-        const deepLink = `https://aday.today/#/main?event=${eventData}`;
+        const deepLink = `https://aday.today/main?event=${eventData}`;
         
         return (
           <div className="flex flex-col h-full bg-neutral-50 p-8 pt-32 items-center text-center">
