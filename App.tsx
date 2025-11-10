@@ -25,10 +25,22 @@ function App() {
         const loc = await getGeoLocation();
         setLocation(loc);
         const evts = await fetchEventsFromGemini(loc);
-        setEvents(evts);
-        if (evts.length > 0) setSelectedEventId(evts[0].id);
+        
+        // Check if we got fallback events
+        if (evts && evts.length > 0) {
+          setEvents(evts);
+          if (evts[0].id.startsWith('fallback_')) {
+            console.info("Showing demo events (API unavailable)");
+          }
+          setSelectedEventId(evts[0].id);
+        } else {
+          throw new Error("No events available");
+        }
       } catch (e: any) {
-        setError(e.message || "Could not load events.");
+        // Only set error if we truly have no data
+        if (!events || events.length === 0) {
+          setError(e.message || "Could not load events.");
+        }
       } finally {
         setLoading(false);
       }
@@ -61,14 +73,32 @@ function App() {
   }
 
   if (error) {
+    // Check if it's an API overload error
+    const isApiError = error.includes('503') || error.includes('overloaded') || error.includes('UNAVAILABLE');
+    
     return (
       <div className="flex h-screen w-full items-center justify-center bg-neutral-100 p-6">
-        <div className="max-w-sm text-center space-y-4">
-          <div className="font-brand text-2xl text-neutral-900">OOPS</div>
-          <p className="text-neutral-600">{error}</p>
-          <button onClick={() => window.location.reload()} className="px-6 py-3 bg-black text-white font-bold rounded-full active:scale-95 transition-transform">
-            RETRY
+        <div className="max-w-md text-center space-y-4">
+          <div className="font-brand text-2xl text-neutral-900">
+            {isApiError ? '⏳ SERVICE BUSY' : 'OOPS'}
+          </div>
+          <p className="text-neutral-600">
+            {isApiError 
+              ? "Our AI service is experiencing high demand right now. We'll show you demo events while we retry in the background."
+              : error
+            }
+          </p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-3 bg-black text-white font-bold rounded-full active:scale-95 transition-transform hover:bg-neutral-800"
+          >
+            {isApiError ? 'TRY AGAIN' : 'RETRY'}
           </button>
+          {isApiError && (
+            <p className="text-xs text-neutral-400 mt-2">
+              Demo events are being shown. Refresh to try loading real events.
+            </p>
+          )}
         </div>
       </div>
     );

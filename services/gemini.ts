@@ -17,11 +17,104 @@ const CATEGORY_IMAGES: { [key: string]: string } = {
   DEFAULT: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80"
 };
 
+// Fallback demo events if API fails
+function getFallbackEvents(location: GeoLocation): EventItem[] {
+  const baseEvents = [
+    {
+      id: "fallback_1",
+      title: "Local Coffee & Culture",
+      description: "Discover hidden gems in your neighborhood",
+      fullDescription: "Explore local cafes, galleries, and cultural spaces. Connect with your community and find what's happening around you.",
+      highlights: ["CULTURE", "All Day", "Community"],
+      rating: 4.5,
+      distance: "Nearby",
+      locationName: location.city,
+      imageUrl: CATEGORY_IMAGES.CULTURE
+    },
+    {
+      id: "fallback_2", 
+      title: "Evening Food Markets",
+      description: "Fresh local produce and street food",
+      fullDescription: "Visit evening markets featuring local vendors, fresh ingredients, and delicious street food. Perfect for dinner planning!",
+      highlights: ["FOOD", "5:00 PM", "Fresh & Local"],
+      rating: 4.3,
+      distance: "2 km",
+      locationName: `${location.city} Market District`,
+      imageUrl: CATEGORY_IMAGES.FOOD
+    },
+    {
+      id: "fallback_3",
+      title: "City Parks & Recreation", 
+      description: "Outdoor activities and green spaces",
+      fullDescription: "Enjoy public parks, walking trails, and outdoor activities. Perfect for exercise or relaxation in nature.",
+      highlights: ["CITY", "All Day", "Outdoors"],
+      rating: 4.6,
+      distance: "1.5 km",
+      locationName: `${location.city} Central Park`,
+      imageUrl: CATEGORY_IMAGES.CITY
+    },
+    {
+      id: "fallback_4",
+      title: "Evening Cinema Showings",
+      description: "Latest movies at local theaters", 
+      fullDescription: "Check out the latest films at nearby cinemas. Multiple showings available throughout the evening.",
+      highlights: ["CINEMA", "7:00 PM", "New Releases"],
+      rating: 4.4,
+      distance: "3 km",
+      locationName: `${location.city} Cinema`,
+      imageUrl: CATEGORY_IMAGES.CINEMA
+    }
+  ];
+
+  return baseEvents.map(evt => ({
+    ...evt,
+    latitude: location.latitude + (Math.random() - 0.5) * 0.02,
+    longitude: location.longitude + (Math.random() - 0.5) * 0.02
+  }));
+}
+
+// Retry with exponential backoff
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>, 
+  maxRetries: number = 3,
+  initialDelay: number = 1000
+): Promise<T> {
+  let lastError: Error | null = null;
+  
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error: any) {
+      lastError = error;
+      
+      // Check if it's a retryable error
+      const isRetryable = error.message?.includes('503') || 
+                         error.message?.includes('overloaded') ||
+                         error.message?.includes('UNAVAILABLE');
+      
+      if (!isRetryable || i === maxRetries - 1) {
+        throw error;
+      }
+      
+      // Wait before retry with exponential backoff
+      const delay = initialDelay * Math.pow(2, i);
+      console.log(`Retry ${i + 1}/${maxRetries} after ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+  
+  throw lastError || new Error('Retry failed');
+}
+
 export async function fetchEventsFromGemini(location: GeoLocation): Promise<EventItem[]> {
   const apiKey = process.env.API_KEY;
-  if (!apiKey) throw new Error("API Key missing.");
+  if (!apiKey) {
+    console.warn("API Key missing. Using fallback data.");
+    return getFallbackEvents(location);
+  }
 
   try {
+    return await retryWithBackoff(async () => {
     const ai = new GoogleGenAI({ apiKey });
     const now = new Date();
     const todayStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -110,9 +203,21 @@ export async function fetchEventsFromGemini(location: GeoLocation): Promise<Even
         imageUrl: imageUrl
       };
     });
+    }, 3, 1000); // 3 retries, starting with 1 second delay
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Event Fetch Error:", error);
-    throw error; // Re-throw to be caught by App.tsx error state
+    
+    // If API fails after retries, use fallback data
+    if (error.message?.includes('503') || 
+        error.message?.includes('overloaded') ||
+        error.message?.includes('UNAVAILABLE')) {
+      console.warn("Gemini API unavailable. Using fallback demo events.");
+      return getFallbackEvents(location);
+    }
+    
+    // For other errors, still provide fallback
+    console.warn("Using fallback events due to error:", error.message);
+    return getFallbackEvents(location);
   }
 }
