@@ -29,3 +29,12 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Flutter/Dart temporary files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Chrome DevTools (Flutter web testing)
+.dart_tool/chrome-device/
+
