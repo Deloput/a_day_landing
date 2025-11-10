@@ -78,8 +78,23 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
              )}
           </div>
         );
-      case 2: // Get There
-        const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${event.latitude},${event.longitude}`;
+      case 2: // Plan Today
+        // Create deep link to Flutter app with event data
+        const eventData = encodeURIComponent(JSON.stringify({
+          id: event.id,
+          title: event.title,
+          description: event.description,
+          fullDescription: event.fullDescription,
+          latitude: event.latitude,
+          longitude: event.longitude,
+          locationName: event.locationName,
+          distance: event.distance,
+          rating: event.rating,
+          highlights: event.highlights,
+          imageUrl: event.imageUrl
+        }));
+        const deepLink = `https://aday.today/#/main?event=${eventData}`;
+        
         return (
           <div className="flex flex-col h-full bg-neutral-50 p-8 pt-32 items-center text-center">
             <div className="w-24 h-24 bg-neutral-900 rounded-full flex items-center justify-center mb-6 text-white shadow-xl">
@@ -92,12 +107,15 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
             <p className="text-neutral-500 mb-12">{event.distance} away</p>
 
             <a 
-              href={googleMapsUrl}
+              href={deepLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-4 bg-neutral-900 text-white font-bold rounded-full shadow-lg active:scale-95 transition-transform flex items-center justify-center"
+              className="w-full py-4 bg-neutral-900 text-white font-bold rounded-full shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2"
             >
-              <span>Open Maps</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+              </svg>
+              <span>Plan Today</span>
             </a>
           </div>
         );
