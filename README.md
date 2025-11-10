@@ -28,6 +28,89 @@ React + TypeScript + Vite application showcasing local events with AI-generated 
 
 ---
 
+## 🏗️ System Architecture
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        Flutter["Flutter Web Frontend<br/>(Main App - /main)"]
+        React["React Landing Page<br/>(Root - /)"]
+    end
+    
+    subgraph "Backend Layer - Cloud Run"
+        API["REST API<br/>(Go Service)"]
+        
+        subgraph "Go Backend Middleware"
+            Intent["Intent Agent"]
+            Context["Context Generation"]
+            Logistics["Logistics Agent"]
+            QA["QA Agent"]
+        end
+    end
+    
+    subgraph "Google Services"
+        Gemini["Gemini AI"]
+        Maps["Google Maps API"]
+        Search["Google Search"]
+    end
+    
+    subgraph "Hosting"
+        Firebase["Firebase Hosting"]
+    end
+    
+    CloudRun["☁️ Cloud Run"]
+    
+    CloudRun --> API
+    API --> Intent
+    API --> Context
+    API --> Logistics
+    API --> QA
+    
+    Flutter --> API
+    React --> API
+    
+    Intent --> Gemini
+    Context --> Gemini
+    Logistics --> Maps
+    QA --> Search
+    
+    Firebase -.->|"Static Assets"| Flutter
+    Firebase -.->|"Static Assets"| React
+    
+    style Flutter fill:#4285f4,stroke:#1967d2,color:#fff
+    style React fill:#61dafb,stroke:#20232a,color:#000
+    style API fill:#00add8,stroke:#00758f,color:#fff
+    style Gemini fill:#ea4335,stroke:#c5221f,color:#fff
+    style Maps fill:#34a853,stroke:#188038,color:#fff
+    style Search fill:#fbbc04,stroke:#f29900,color:#000
+    style Firebase fill:#ffca28,stroke:#f57c00,color:#000
+    style CloudRun fill:#4285f4,stroke:#1967d2,color:#fff
+```
+
+### Architecture Components
+
+#### Frontend Layer
+- **React Landing Page** (`/`) - Event discovery, AI-powered content generation
+- **Flutter Web App** (`/main`) - Navigation, trip planning, real-time features
+
+#### Backend Layer (Cloud Run)
+- **REST API (Go)** - Central backend service with agent-based architecture:
+  - **Intent Agent** - User intent understanding and routing
+  - **Context Generation** - Contextual information enrichment
+  - **Logistics Agent** - Route planning and optimization
+  - **QA Agent** - Quality assurance and validation
+
+#### Google Services Integration
+- **Gemini AI** - Natural language processing, event generation
+- **Google Maps API** - Geocoding, routing, place information
+- **Google Search** - Additional data enrichment
+
+#### Deployment
+- **Firebase Hosting** - Static asset delivery for both React and Flutter apps
+- **Cloud Run** - Serverless backend with autoscaling
+
+---
+
 ## 📦 Installation
 
 ```bash
