@@ -15,6 +15,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
         group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-300 ease-out
         /* Mobile: Fixed width for carousel. Desktop: Full width of sidebar */
         w-[260px] md:w-full
+        min-h-[340px] md:min-h-0
         bg-white
         ${isActive 
           ? 'ring-[3px] ring-neutral-900 shadow-xl scale-[1.02] md:scale-[1.01]' 
@@ -44,7 +45,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
       </div>
       
       {/* Content */}
-      <div className="p-5">
+      <div className="pt-5 px-5 pb-6">
         <h3 className={`font-bold text-lg leading-tight mb-2 line-clamp-2 ${isActive ? 'text-black' : 'text-neutral-800'}`}>
           {event.title}
         </h3>

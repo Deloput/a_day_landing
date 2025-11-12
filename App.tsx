@@ -103,10 +103,12 @@ function App() {
           clearInterval(retryTimer);
           
           // Add events one by one with staggered animation
+          const isFirstLoad = events.length === 0;
           evts.forEach((evt, index) => {
             setTimeout(() => {
               setEvents(prev => [...prev, evt]);
-              if (index === 0) {
+              // Select SECOND card (index 1) ONLY on first load
+              if (isFirstLoad && index === 1 && !selectedEventId) {
                 setSelectedEventId(evt.id);
               }
             }, index * 200); // 200ms delay between each card
@@ -260,8 +262,8 @@ function App() {
         )}
 
         {/* Mobile Bottom Carousel */}
-        <div className="md:hidden absolute bottom-0 left-0 right-0 z-[500] pb-6 pt-24 bg-gradient-to-t from-neutral-900/50 via-neutral-900/10 to-transparent pointer-events-none">
-          <div className="flex overflow-x-auto snap-x snap-mandatory px-4 space-x-3 no-scrollbar pointer-events-auto">
+        <div className="md:hidden absolute inset-x-0 bottom-0 h-[420px] z-[500] bg-gradient-to-t from-neutral-900/60 via-neutral-900/10 to-transparent pointer-events-none flex flex-col justify-end">
+          <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pt-8 pb-28 space-x-3 no-scrollbar pointer-events-auto">
             {showSkeleton && events.length === 0 ? (
               // Show skeleton cards while loading (mobile)
               <>
@@ -276,7 +278,7 @@ function App() {
               events.map((event, index) => (
                 <div 
                   key={event.id} 
-                  className="snap-center shrink-0 first:pl-2 last:pr-6 animate-fade-in" 
+                  className="snap-center shrink-0 first:pl-2 last:pr-6 animate-fade-in"
                   style={{ animationDelay: `${index * 0.05}s` }}
                   ref={el => { cardsRef.current[event.id] = el; }}
                 >
