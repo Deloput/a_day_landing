@@ -295,10 +295,14 @@ function App() {
       {/* === CTA BUTTON: PLAN A DAY === */}
       <a
         href="https://aday.today/main?action=plan"
-        className="fixed z-[600] md:top-8 md:right-8 bottom-6 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto
-                   bg-neutral-900 text-white font-brand text-xl tracking-tighter px-8 py-4 rounded-full
+        className="fixed z-[600] bottom-6 left-1/2 -translate-x-1/2 
+                   md:bottom-8 md:right-8 md:left-auto md:translate-x-0
+                   bg-neutral-900 text-white font-brand text-xl tracking-tighter 
+                   px-8 py-4 md:px-6 md:py-3.5
+                   rounded-full md:rounded-[50px]
                    shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-200
-                   flex items-center gap-3 group"
+                   flex items-center justify-center gap-3 md:gap-2.5 
+                   whitespace-nowrap group"
         style={{ textShadow: '2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000' }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 group-hover:rotate-12 transition-transform">
