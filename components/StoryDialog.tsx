@@ -93,7 +93,9 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
           highlights: event.highlights,
           imageUrl: event.imageUrl
         }));
-        const deepLink = `https://aday.today/main?event=${eventData}`;
+        const deepLink = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? `http://localhost:8081/main/index.html#/main?event=${eventData}`
+          : `https://aday.today/#/main?event=${eventData}`;
         
         return (
           <div className="flex flex-col h-full bg-neutral-50 p-8 pt-32 items-center text-center">
@@ -107,7 +109,12 @@ const StoryDialog: React.FC<StoryDialogProps> = ({ event, onClose }) => {
             <p className="text-neutral-500 mb-12">{event.distance} away</p>
 
             <a
-              href={deepLink}
+              onClick={(e) => {
+                e.preventDefault();
+                console.log('Navigating to:', deepLink);
+                window.location.replace(deepLink);
+              }}
+              href="#"
               className="w-full py-4 bg-neutral-900 text-white font-bold rounded-full shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">

@@ -263,7 +263,7 @@ function App() {
 
         {/* Mobile Bottom Carousel */}
         <div className="md:hidden absolute inset-x-0 bottom-0 h-[420px] z-[500] bg-gradient-to-t from-neutral-900/60 via-neutral-900/10 to-transparent pointer-events-none flex flex-col justify-end">
-          <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pt-8 pb-28 space-x-3 no-scrollbar pointer-events-auto">
+          <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pb-28 space-x-3 no-scrollbar pointer-events-auto" style={{ paddingTop: '37px' }}>
             {showSkeleton && events.length === 0 ? (
               // Show skeleton cards while loading (mobile)
               <>
@@ -296,7 +296,16 @@ function App() {
 
       {/* === CTA BUTTON: PLAN A DAY === */}
       <a
-        href="https://aday.today/main?action=plan"
+        onClick={(e) => {
+          e.preventDefault();
+          const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+          const url = isLocalhost 
+            ? 'http://localhost:8081/main/index.html#/main?action=plan'
+            : 'https://aday.today/#/main?action=plan';
+          console.log('Navigating to:', url);
+          window.location.replace(url);
+        }}
+        href="#"
         className="fixed z-[600] bottom-6 left-1/2 -translate-x-1/2 
                    md:bottom-8 md:right-8 md:left-auto md:translate-x-0
                    bg-neutral-900 text-white font-brand text-xl tracking-tighter 

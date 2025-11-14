@@ -12,24 +12,27 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
     <div 
       onClick={onClick}
       className={`
-        group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-300 ease-out
+        group relative rounded-3xl cursor-pointer transition-all duration-300 ease-out
         /* Mobile: Fixed width for carousel. Desktop: Full width of sidebar */
-        w-[260px] md:w-full
-        min-h-[340px] md:min-h-0
+        w-[240px] md:w-full
+        min-h-[300px] md:min-h-0
         bg-white
+        overflow-visible
         ${isActive 
           ? 'ring-[3px] ring-neutral-900 shadow-xl scale-[1.02] md:scale-[1.01]' 
           : 'ring-1 ring-neutral-200 shadow-sm hover:shadow-md hover:-translate-y-0.5'
         }
       `}
+      style={{ marginTop: '25px', paddingTop: '0' }}
     >
-      {/* Image Container - slightly taller on desktop for better look in vertical list */}
-      <div className="relative h-36 md:h-48 bg-neutral-100">
+      {/* Image Container - with extra space at top to prevent clipping */}
+      <div className="relative bg-neutral-100 rounded-t-3xl overflow-hidden" style={{ height: 'calc(110px + 29px)', marginTop: '-25px', paddingTop: '29px' }}>
         <img 
           src={event.imageUrl} 
           alt={event.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
+          style={{ height: '110px', width: '100%', marginTop: '-29px' }}
         />
         {/* Rating Badge */}
         <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold text-neutral-900 flex items-center shadow-sm z-10">
