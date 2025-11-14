@@ -141,11 +141,25 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center bg-neutral-950 text-white space-y-6">
-        <div className="font-brand text-4xl tracking-tighter text-retro-outline animate-pulse">
-          A DAY<br/>TODAY
+      <div className="flex h-screen w-full flex-col items-center justify-center bg-white text-black space-y-8 relative overflow-hidden">
+        {/* Arrival Grid Background */}
+        <div className="absolute inset-0 arrival-grid-bg"></div>
+        
+        {/* Logo with Arrival style */}
+        <div className="font-brand text-5xl tracking-tighter text-arrival-outline relative z-10">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="arrival-star arrival-star-spin text-4xl">★</span>
+            <div>
+              A DAY<br/>TODAY
+            </div>
+            <span className="arrival-star arrival-star-spin text-4xl">★</span>
+          </div>
         </div>
-        <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"/>
+        
+        {/* Arrival-style loading indicator */}
+        <div className="relative z-10">
+          <div className="w-12 h-12 border-4 border-black border-t-transparent animate-spin" style={{ animationDuration: '1s' }}></div>
+        </div>
       </div>
     );
   }

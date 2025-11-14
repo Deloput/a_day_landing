@@ -35,10 +35,10 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
           loading="lazy"
           style={{ height: '90px', width: '100%', marginTop: '-29px' }}
         />
-        {/* Rating Badge */}
-        <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold text-neutral-900 flex items-center shadow-sm z-10">
-          <span className="text-amber-500 mr-1">★</span>
-          {event.rating.toFixed(1)}
+        {/* Rating Badge - Arrival style black & white */}
+        <div className="absolute top-3 right-3 bg-white border-2 border-black px-2.5 py-1 rounded-sm text-xs font-bold text-black flex items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10">
+          <span className="arrival-star text-black mr-1.5 text-sm">★</span>
+          <span className="font-mono">{event.rating.toFixed(1)}</span>
         </div>
         {/* Category Badge (using first highlight) */}
         {event.highlights?.[0] && (

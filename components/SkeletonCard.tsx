@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-neutral-100 animate-pulse">
+    <div className="bg-white rounded-2xl overflow-hidden border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] animate-pulse">
       <div className="relative aspect-[4/3] bg-neutral-200">
         {/* Shimmer effect */}
         <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
