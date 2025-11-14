@@ -17,7 +17,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
         w-[240px] md:w-full
         min-h-[300px] md:min-h-0
         bg-white
-        overflow-visible
+        overflow-hidden
         ${isActive 
           ? 'ring-[3px] ring-neutral-900 shadow-xl scale-[1.02] md:scale-[1.01]' 
           : 'ring-1 ring-neutral-200 shadow-sm hover:shadow-md hover:-translate-y-0.5'

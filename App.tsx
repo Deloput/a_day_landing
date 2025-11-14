@@ -263,7 +263,7 @@ function App() {
 
         {/* Mobile Bottom Carousel */}
         <div className="md:hidden absolute inset-x-0 bottom-0 h-[420px] z-[500] bg-gradient-to-t from-neutral-900/60 via-neutral-900/10 to-transparent pointer-events-none flex flex-col justify-end">
-          <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pb-28 space-x-3 no-scrollbar pointer-events-auto" style={{ paddingTop: '37px' }}>
+          <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pb-28 space-x-3 no-scrollbar pointer-events-auto overflow-y-hidden" style={{ paddingTop: '37px' }}>
             {showSkeleton && events.length === 0 ? (
               // Show skeleton cards while loading (mobile)
               <>
