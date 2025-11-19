@@ -148,11 +148,11 @@ function App() {
         {/* Logo with Arrival style */}
         <div className="font-brand text-5xl tracking-tighter text-arrival-outline relative z-10">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <span className="arrival-star arrival-star-spin text-4xl">★</span>
+            <span className="arrival-star arrival-star-spin text-4xl">*</span>
             <div>
               A DAY<br/>TODAY
             </div>
-            <span className="arrival-star arrival-star-spin text-4xl">★</span>
+            <span className="arrival-star arrival-star-spin text-4xl">*</span>
           </div>
         </div>
         
@@ -197,23 +197,26 @@ function App() {
   }
 
   return (
-    <div className="flex h-full w-full overflow-hidden bg-neutral-100 relative">
+    <div className="flex h-full w-full overflow-hidden bg-white relative">
       
       {/* === DESKTOP SIDEBAR (LEFT) === */}
-      <div className="hidden md:flex w-[400px] lg:w-[480px] flex-col bg-white z-20 shadow-2xl h-full shrink-0 relative">
-        {/* Desktop Header */}
-        <div className="p-8 pb-6 border-b border-neutral-100 shrink-0">
-          <div className="font-brand text-3xl leading-none tracking-tighter text-neutral-900 mb-6">
-            A DAY<br/>TODAY
+      <div className="hidden md:flex w-[400px] lg:w-[480px] flex-col bg-white z-20 border-r-4 border-black h-full shrink-0 relative">
+        {/* Desktop Header - Arrival style */}
+        <div className="p-8 pb-6 border-b-4 border-black shrink-0">
+          <div className="font-brand text-3xl leading-none tracking-tighter text-black mb-6 flex items-center gap-2">
+            <span className="arrival-star text-2xl">*</span>
+            <div>
+              A DAY<br/>TODAY
+            </div>
           </div>
           <div>
-            <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Happening Now in</p>
-            <h1 className="text-2xl font-extrabold tracking-tight text-neutral-900">{location?.city}</h1>
+            <p className="text-xs font-bold text-black uppercase tracking-widest font-mono">Happening Now in</p>
+            <h1 className="text-2xl font-extrabold tracking-tight text-black font-brand">{location?.city}</h1>
           </div>
           {/* Loading indicator when skeleton is showing */}
           {showSkeleton && events.length === 0 && (
-            <div className="mt-4 flex items-center gap-2 text-neutral-500 text-sm">
-              <div className="w-4 h-4 border-2 border-neutral-300 border-t-neutral-700 rounded-full animate-spin"></div>
+            <div className="mt-4 flex items-center gap-2 text-black text-sm">
+              <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
               <span>Loading events...</span>
             </div>
           )}
@@ -259,7 +262,7 @@ function App() {
            <div className="font-brand text-2xl leading-none tracking-tighter text-retro-outline drop-shadow-lg mb-2">
             A DAY<br/>TODAY
           </div>
-          <div className="bg-neutral-900/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full inline-flex items-center shadow-lg">
+          <div className="bg-black border-2 border-black text-white px-3 py-1.5 rounded-sm inline-flex items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-mono">
             <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
             <span className="text-xs font-bold uppercase tracking-wide">{location?.city}</span>
           </div>
@@ -275,8 +278,8 @@ function App() {
           />
         )}
 
-        {/* Mobile Bottom Carousel */}
-        <div className="md:hidden absolute inset-x-0 bottom-0 h-[420px] z-[500] bg-gradient-to-t from-neutral-900/60 via-neutral-900/10 to-transparent pointer-events-none flex flex-col justify-end">
+        {/* Mobile Bottom Carousel - Arrival style */}
+        <div className="md:hidden absolute inset-x-0 bottom-0 h-[420px] z-[500] bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none flex flex-col justify-end border-t-4 border-black">
           <div className="flex items-end overflow-x-auto snap-x snap-mandatory px-4 pb-28 space-x-3 no-scrollbar pointer-events-auto overflow-y-hidden" style={{ paddingTop: '37px' }}>
             {showSkeleton && events.length === 0 ? (
               // Show skeleton cards while loading (mobile)
@@ -322,17 +325,17 @@ function App() {
         href="#"
         className="fixed z-[600] bottom-6 left-1/2 -translate-x-1/2 
                    md:bottom-8 md:right-8 md:left-auto md:translate-x-0
-                   bg-neutral-900 text-white font-brand text-xl tracking-tighter 
+                   bg-black text-white font-brand text-xl tracking-tighter 
                    px-8 py-4 md:px-6 md:py-3.5
-                   rounded-full md:rounded-[50px]
-                   shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-200
+                   border-4 border-black
+                   shadow-[8px_8px_0px_0px_rgba(0,0,0,0.3)]
+                   hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-1 hover:translate-y-1
+                   active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] active:translate-x-2 active:translate-y-2
+                   transition-all duration-150 ease-out
                    flex items-center justify-center gap-3 md:gap-2.5 
                    whitespace-nowrap group"
-        style={{ textShadow: '2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000' }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 group-hover:rotate-12 transition-transform">
-          <path d="M11.25 5.337c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.036 1.007-1.875 2.25-1.875S15 2.34 15 3.375c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .332.278.598.61.578 1.91-.114 3.79-.342 5.632-.676a.75.75 0 01.878.645 49.17 49.17 0 01.376 5.452.657.657 0 01-.66.664c-.354 0-.675-.186-.958-.401a1.647 1.647 0 00-1.003-.349c-1.035 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .557.262.534.571a48.774 48.774 0 01-.595 4.845.75.75 0 01-.61.61c-1.82.317-3.673.533-5.555.642a.58.58 0 01-.611-.581c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.035-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.641.641 0 01-.658.643 49.118 49.118 0 01-4.708-.36.75.75 0 01-.645-.878c.293-1.614.504-3.257.629-4.924A.53.53 0 005.337 15c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.036 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.369 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82.75.75 0 01.83-.832c1.343.155 2.703.254 4.077.294a.64.64 0 00.657-.642z" />
-        </svg>
+        <span className="text-white text-xl">*</span>
         <span>PLAN A DAY</span>
       </a>
 

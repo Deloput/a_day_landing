@@ -20,14 +20,14 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
         overflow-hidden
         flex flex-col
         ${isActive 
-          ? 'ring-[3px] ring-neutral-900 shadow-xl scale-[1.02] md:scale-[1.01]' 
-          : 'ring-1 ring-neutral-200 shadow-sm hover:shadow-md hover:-translate-y-0.5'
+          ? 'border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] scale-[1.01] md:scale-[1.005]' 
+          : 'border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-150'
         }
       `}
       style={{ marginTop: '25px', paddingTop: '0' }}
     >
       {/* Image Container - with extra space at top to prevent clipping */}
-      <div className="relative bg-neutral-100 rounded-t-3xl overflow-hidden" style={{ height: 'calc(90px + 29px)', marginTop: '-25px', paddingTop: '29px' }}>
+      <div className="relative bg-gray-100 rounded-t-3xl overflow-hidden" style={{ height: 'calc(90px + 29px)', marginTop: '-25px', paddingTop: '29px' }}>
         <img 
           src={event.imageUrl} 
           alt={event.title}
@@ -37,26 +37,26 @@ const EventCard: React.FC<EventCardProps> = ({ event, isActive, onClick }) => {
         />
         {/* Rating Badge - Arrival style black & white */}
         <div className="absolute top-3 right-3 bg-white border-2 border-black px-2.5 py-1 rounded-sm text-xs font-bold text-black flex items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10">
-          <span className="arrival-star text-black mr-1.5 text-sm">★</span>
+          <span className="text-black mr-1.5 text-sm font-bold">*</span>
           <span className="font-mono">{event.rating.toFixed(1)}</span>
         </div>
-        {/* Category Badge (using first highlight) */}
+        {/* Category Badge - Arrival style black & white */}
         {event.highlights?.[0] && (
-           <div className="absolute bottom-3 left-3 bg-neutral-900/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-bold text-white uppercase tracking-wider z-10">
+           <div className="absolute bottom-3 left-3 bg-white border-2 border-black px-2.5 py-1 rounded-sm text-[10px] font-bold text-black uppercase tracking-wider z-10 font-mono shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
              {event.highlights[0]}
            </div>
         )}
       </div>
       
       {/* Content */}
-      <div className="pt-4 px-5 pb-5 flex-1 flex flex-col">
-        <h3 className={`font-bold text-base leading-tight mb-1.5 line-clamp-2 ${isActive ? 'text-black' : 'text-neutral-800'}`}>
+      <div className="pt-3 px-4 pb-4 flex-1 flex flex-col min-h-0">
+        <h3 className={`font-bold text-sm leading-tight mb-1 line-clamp-2 ${isActive ? 'text-black' : 'text-black'}`}>
           {event.title}
         </h3>
-        <p className="text-xs text-neutral-500 line-clamp-2 mb-3 flex-1">{event.description}</p>
+        <p className="text-xs text-gray-600 line-clamp-2 mb-2 flex-shrink-0">{event.description}</p>
         
-        <div className="flex items-center text-xs font-semibold text-neutral-400 uppercase tracking-wide mt-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 mr-1.5 text-neutral-300">
+        <div className="flex items-center text-[10px] font-semibold text-gray-500 uppercase tracking-wide mt-auto font-mono">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 mr-1 text-black flex-shrink-0">
             <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
           </svg>
           <span className="truncate">{event.distance} • {event.locationName}</span>
